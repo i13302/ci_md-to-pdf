@@ -1,29 +1,16 @@
-FROM pandoc/latex:2.14.1
+# https://44smkn.hatenadiary.com/entry/2021/03/23/224925
+# FROM ubuntu:focal
 
-WORKDIR /data
+# ENV TZ=Asia/Tokyo
+# RUN apt-get update && apt-get install -y tzdata
+# RUN apt-get install -y pandoc wkhtmltopdf fonts-ipafont fonts-ipaexfont && \
+#     fc-cache -fv && \
+# 	apt-get autoremove && apt-get clean
 
-RUN apk add --update ghostscript && \
-	tlmgr update --self && \
-	tlmgr install collection-langjapanese luatexja selnolig bxjscls && \
-	apk del tzdata && \
-	rm -rf /opt/texlive/texdir/tlpkg/backups /opt/texlive/texdir/texmf-var/web2c/*.log
+# LABEL org.opencontainers.image.source=https://github.com/44smkn/pandoc-ja-container
 
-RUN apk add --update --no-cache \
-    libgcc libstdc++ libx11 glib libxrender libxext libintl \
-    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
-
-COPY --from=madnight/alpine-wkhtmltopdf-builder:0.12.5-alpine3.10-606718795 \
-    /bin/wkhtmltopdf /bin/wkhtmltopdf
-
-
-RUN apk update \
-  && apk add --no-cache curl wget fontconfig \
-  && curl -O https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip \
-  && mkdir -p /usr/share/fonts/NotoSansCJKjp \
-  && unzip NotoSansCJKjp-hinted.zip -d /usr/share/fonts/NotoSansCJKjp/ \
-  && rm NotoSansCJKjp-hinted.zip \
-  && fc-cache -fv
-
+# ENTRYPOINT [ "pandoc" ]
+FROM ghcr.io/44smkn/pandoc/ja:0.1.1
+# WORKDIR /data
 COPY . .
-
-# ENTRYPOINT /bin/ash
+# ENTRYPOINT [ "/bin/bash" ]
