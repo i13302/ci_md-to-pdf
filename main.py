@@ -29,9 +29,10 @@ def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
 
 	calculated_print_options = {
             'landscape': False,
-            'displayHeaderFooter': False,
+            'displayHeaderFooter': True,
             'printBackground': True,
             'preferCSSPageSize': True,
+            'footerTemplate': "<div class=\"page-footer\" style=\"width:100%; text-align:right; font-size:12px;\">Page <span class=\"pageNumber\"></span> of <span class=\"totalPages\"></span></div>",
 	}
 	calculated_print_options.update(print_options)
 	result = send_devtools(driver, "Page.printToPDF", calculated_print_options)
