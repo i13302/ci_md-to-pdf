@@ -1,16 +1,30 @@
-# https://44smkn.hatenadiary.com/entry/2021/03/23/224925
-# FROM ubuntu:focal
+# https://kcpoipoi.hatenablog.com/entry/2020/07/27/120438#HTML%E5%87%BA%E5%8A%9B%E3%81%AE%E5%A0%B4%E5%90%88easy-pandoc-templates%E4%BD%BF%E7%94%A8%E3%82%92%E5%89%8D%E6%8F%90
+FROM pandoc/latex:2.9.2.1
+# FROM pandoc/latex:2.14.1
 
-# ENV TZ=Asia/Tokyo
-# RUN apt-get update && apt-get install -y tzdata
-# RUN apt-get install -y pandoc wkhtmltopdf fonts-ipafont fonts-ipaexfont && \
-#     fc-cache -fv && \
-# 	apt-get autoremove && apt-get clean
 
-# LABEL org.opencontainers.image.source=https://github.com/44smkn/pandoc-ja-container
+RUN tlmgr update --self && \
+	tlmgr install \
+      bxjscls \
+      bxwareki \
+      everyhook \
+      ipaex \
+      luatexja \
+      svn-prov \
+      type1cm \
+	  
+	  && \
+    tlmgr update latex
+RUN wget -O - https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.4/pandoc-crossref-Linux-2.9.2.1.tar.xz | \
+  tar Jxf - \
+  && mv pandoc-crossref /usr/lib/ \
+  && rm -rf pandoc-crossref.1
+RUN wget -O - https://github.com/ryangrose/easy-pandoc-templates/archive/master.tar.gz | \
+  tar zxvf - -C /tmp/ \
+  && mv /tmp/easy-pandoc-templates* /usr/lib/easy-pandoc-templates \
+  && rm -rf /tmp/*
 
-# ENTRYPOINT [ "pandoc" ]
-FROM ghcr.io/44smkn/pandoc/ja:0.1.1
-# WORKDIR /data
+
 COPY . .
-# ENTRYPOINT [ "/bin/bash" ]
+# ENTRYPOINT /usr/bin/pandoc
+# ENTRYPOINT /bin/ash
