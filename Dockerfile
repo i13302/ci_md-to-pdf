@@ -16,8 +16,13 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
 
 # install any package
 RUN apt-get -y update && \
-	apt-get -y install python-dev default-libmysqlclient-dev google-chrome-beta=95.0.4638.40-1 && \
+	apt-get -y install python-dev default-libmysqlclient-dev fonts-ipafont google-chrome-beta=95.0.4638.40-1 && \
 	apt-get -y autoremove && apt-get -y clean
+
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:jp
+ENV LC_ALL ja_JP.UTF-8
+
 
 # install ChromeDriver
 WORKDIR /usr/local/bin
