@@ -1,4 +1,0 @@
-bs4
-requests
-selenium
-chromedriver_binary
