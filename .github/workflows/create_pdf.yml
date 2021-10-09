@@ -16,7 +16,6 @@ jobs:
       - run: |
           node -v
           npm install
-#          node ./index.js
           md-to-pdf --help
           exit 1 
       - uses: actions/upload-artifact@v1
