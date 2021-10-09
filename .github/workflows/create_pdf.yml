@@ -1,24 +1,19 @@
-# https://kic-yuuki.hatenablog.com/entry/2020/01/25/130303
-name: Create PDF
+# https://github.com/44smkn/md-to-pdf-sample
+name: Generate CV PDF
+
 on: push
 
 jobs:
-  lint:
-    name: Create PDF
-    runs-on: ubuntu-latest
+  convert_via_pandoc:
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "13.6.0"
       - run: |
-          node -v
-          npm -g install md-to-pdf
-          md-to-pdf --help
-          exit 1 
-      - uses: actions/upload-artifact@v1
+          mkdir output
+      - uses: docker://ghcr.io/44smkn/pandoc/ja:0.1.1
         with:
-          name: create-pdf
-          path: ./README.pdf
+          args: markdown/01_Doc.md -s -o 01_Doc.pdf -c style.css --pdf-engine=wkhtmltopdf
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: 01_Doc/blog.pdf
