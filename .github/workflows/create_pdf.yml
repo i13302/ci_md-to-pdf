@@ -12,7 +12,7 @@ jobs:
           mkdir output
       - uses: docker://ghcr.io/44smkn/pandoc/ja:0.1.1
         with:
-          args: markdown/01_Doc.md -s -o 01_Doc.pdf --pdf-engine=wkhtmltopdf
+          args: markdown/01_Doc.md -s -o 01_Doc.pdf -c markdown-pdf.css --pdf-engine=wkhtmltopdf
       - uses: actions/upload-artifact@master
         with:
           name: output
