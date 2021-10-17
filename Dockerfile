@@ -9,8 +9,8 @@ RUN apk --no-cache add tzdata && \
 RUN apk add --update --no-cache \
     libgcc libstdc++ libx11 glib libxrender libxext libintl \
     ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
-COPY --from=madnight/alpine-wkhtmltopdf-builder:0.12.5-alpine3.10-606718795 \
-    /bin/wkhtmltopdf /bin/wkhtmltopdf
+# COPY --from=madnight/alpine-wkhtmltopdf-builder:0.12.5-alpine3.10-606718795 \
+#     /bin/wkhtmltopdf /bin/wkhtmltopdf
 
 RUN tlmgr update --self && \
 	tlmgr install \
@@ -43,8 +43,7 @@ RUN apk update \
 #   tar zxvf - -C /tmp/ \
 #   && mv /tmp/easy-pandoc-templates* /usr/lib/easy-pandoc-templates \
 #   && rm -rf /tmp/*
-
-
-COPY . .
-# ENTRYPOINT /usr/bin/pandoc
+WORKDIR /data
+# COPY . .
+# ENTRYPOINT /usr/local/bin/pandoc
 # ENTRYPOINT /bin/ash
