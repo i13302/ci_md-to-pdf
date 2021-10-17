@@ -9,3 +9,4 @@ CSSなどのスタイルやレイアウトは，授業資料とか技術系の�
 
 まずは，[markdownディレクトリの中身](./markdown)を変換する．
 
+`google-chrome-beta_95.0.4638.49-1_amd64.deb` は，[UbuntuUpdates - Package "google-chrome-beta" (stable )](https://www.ubuntuupdates.org/package/google_chrome/stable/main/base/google-chrome-beta)からダウンロードしたものを置いています．
