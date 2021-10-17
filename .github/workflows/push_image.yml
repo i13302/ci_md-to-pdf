@@ -6,9 +6,9 @@ on:
       - master
 
 jobs:
-  env:
-      CTN: i13302/printout
   push:
+    env:
+      CTN: i13302/printout
     runs-on: ubuntu-20.04
     steps:
         - uses: actions/checkout@v1
