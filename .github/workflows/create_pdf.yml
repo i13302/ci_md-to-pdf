@@ -1,19 +1,21 @@
 # https://github.com/44smkn/md-to-pdf-sample
 name: Generate CV PDF
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   convert_via_pandoc:
+    needs: push_image
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - run: |
-          mkdir output
-      - uses: docker://ghcr.io/44smkn/pandoc/ja:0.1.1
-        with:
-          args: markdown/01_Doc.md -s -o 01_Doc.pdf -c .github/style/markdown.css -c .github/style/markdown-pdf.css --pdf-engine=wkhtmltopdf
+          make setup
+          make test
       - uses: actions/upload-artifact@master
         with:
           name: output
-          path: 01_Doc.pdf
+          path: work/pdf/01_Doc.pdf work/pdf/01_Doc_en.pdf
