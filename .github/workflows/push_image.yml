@@ -8,7 +8,7 @@ on:
 jobs:
   push:
     env:
-      IMANE-NAME: printout
+      IMANE_NAME: printout
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
