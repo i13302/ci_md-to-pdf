@@ -60,11 +60,13 @@ jobs:
     needs: push_image
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
-      - run: |
+      - name: Build File markdown to pdf.
+        uses: actions/checkout@v2
+        run: |
           make setup
-          make test
-      - uses: actions/upload-artifact@master
+          make CTN2=ghcr.io/i13302/printout test
+      - name: Upload file pdf.
+        uses: actions/upload-artifact@master
         with:
           name: output
           path: work/pdf/01_Doc.pdf work/pdf/01_Doc_en.pdf
