@@ -3,6 +3,9 @@ CTN1=pandoc/latex
 CTN2=i13302/printout
 TZ=-e TZ=Asia/Tokyo
 
+setup:
+	mkdir -p work/css work/html work/markdown work/pdf
+
 build:
 	docker build . -t $(CTN2)
 
