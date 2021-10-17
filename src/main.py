@@ -29,11 +29,11 @@ def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
 
 	calculated_print_options = {
             'landscape': False,
-            'displayHeaderFooter': False,
+            'displayHeaderFooter': True,
             'printBackground': True,
             'preferCSSPageSize': True,
-            'headerTemplate': '',
-            'footerTemplate': '',
+            'headerTemplate': '<div style="font-size: 9px; margin-left: 1cm;"> <span class="title"></span></div> <div style="font-size: 9px; margin-left: auto; margin-right: 1cm; "> <span class="date"></span></div>',
+            'footerTemplate': '<div style="font-size: 9px; margin: 0 auto;"> <span class="pageNumber"></span> / <span class="totalPages"></span></div>',
             'format_option': 'A4'
 	}
 	calculated_print_options.update(print_options)
