@@ -34,8 +34,7 @@ def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
             'preferCSSPageSize': True,
             'headerTemplate': '',
             'footerTemplate': '',
-            'format_option': 'A4',
-            'landscape': False
+            'format_option': 'A4'
 	}
 	calculated_print_options.update(print_options)
 	result = send_devtools(driver, "Page.printToPDF", calculated_print_options)
@@ -50,6 +49,6 @@ def write_file_from_base64(base64, pdfpath):
 
 if __name__ == "__main__":
 	write_file_from_base64(
-            get_pdf_from_html('file:///WORK/markdown/01_Doc.html', '/usr/local/bin/chromedriver'), '01_Doc.pdf')
+            get_pdf_from_html('file:///data/'+sys.argv[1], '/usr/local/bin/chromedriver'), '/data/'+sys.argv[2])
 	# pass
 	# TODO: add short help layout
