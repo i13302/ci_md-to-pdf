@@ -8,7 +8,7 @@ on:
 jobs:
   push:
     env:
-      IMANE_NAME: printout
+      IMAGE_NAME: printout
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
