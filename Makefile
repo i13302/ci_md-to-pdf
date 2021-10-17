@@ -1,10 +1,14 @@
 CC=
-CTN=pandoc/latex
+CTN1=pandoc/latex
+CTN2=i13302/printout
+
 build:
-	docker build . -t $(CTN)
+	docker build . -t $(CTN2)
+
 run:
-	-docker run --rm --volume "$(shell pwd):/data" $(CTN) $(CC) -f markdown -t html --self-contained markdown/01_Doc_en.md -c .github/style/markdown.css -c .github/style/markdown-pdf.css -t html -o 01_Doc_en.html
-	-docker run --rm --volume "$(shell pwd):/data" $(CTN) $(CC) -f markdown -t html --self-contained markdown/01_Doc.md -c .github/style/markdown.css -c .github/style/markdown-pdf.css -o 01_Doc.html --pdf-engine=lualatex -V documentclass=ltjsarticle
+	-docker run --rm --volume "$(shell pwd)/work:/data" $(CTN1) $(CC) -f markdown -t html --self-contained markdown/01_Doc_en.md -c css/markdown.css -c css/markdown-pdf.css -t html -o html/01_Doc_en.html && docker run --rm --volume "$(shell pwd)/work:/data" $(CTN2) $(CC) "html/01_Doc_en.html pdf/01_Doc_en.pdf"
+	-docker run --rm --volume "$(shell pwd)/work:/data" $(CTN1) $(CC) -f markdown -t html --self-contained markdown/01_Doc.md -c css/markdown.css -c css/markdown-pdf.css -t html -o html/01_Doc.html && docker run --rm --volume "$(shell pwd)/work:/data" $(CTN2) $(CC) "html/01_Doc.html pdf/01_Doc.pdf"
+
+
 clean:
-	-rm -f 01_Doc_en.pdf 01_Doc.pdf 02_Doc.pdf 
-	-rm -f 01_Doc_en.html 01_Doc.html 02_Doc.html
+	-rm -f  work/html/*.html work/pdf/*.pdf

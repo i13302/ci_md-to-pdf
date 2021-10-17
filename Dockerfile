@@ -32,5 +32,8 @@ WORKDIR /tmp
 COPY requirements.txt .
 RUN pip3 install --upgrade pip && pip3 install --no-cache-dir -r /tmp/requirements.txt
 
-WORKDIR /WORK
-COPY . .
+WORKDIR /root
+COPY src .
+RUN chmod +x docker-entrypoint.sh
+
+ENTRYPOINT ["/root/docker-entrypoint.sh"]
