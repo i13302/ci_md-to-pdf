@@ -71,7 +71,7 @@ jobs:
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
         with:
-          name: output
+          name: convert_file
           path: work/pdf/*.pdf
           
   convert_dir:
@@ -89,5 +89,5 @@ jobs:
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
         with:
-          name: output
+          name: convert_dir
           path: work/pdf/*.pdf
