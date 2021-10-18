@@ -21,13 +21,13 @@ RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >
 
 #===================================================================================================
 # from 【Docker】 docker image の大きさを小さくする(その２) - Qiita https://qiita.com/XPT60/items/e123fe88ec88a4ac2749
-FROM ubuntu:18.04 AS python-compile
+FROM debian:buster AS python-compile
 WORKDIR /root
 
 COPY src/requirements.txt .
 
-RUN apt-get update && apt-get install -y python3 python3-pip
-RUN python3 -m pip install --user -r requirements.txt
+RUN apt-get -y update && apt-get -y install python3 python3-pip
+RUN pip3 install --user -r requirements.txt
 #===================================================================================================
 
 #===================================================================================================
