@@ -9,11 +9,9 @@ CSSなどのスタイルやレイアウトは，授業資料とか技術系の�
 
 現状の生成物は，各Actionsの実行結果を確認のこと．
 
-`google-chrome-beta_95.0.4638.49-1_amd64.deb` は，[UbuntuUpdates - Package "google-chrome-beta" (stable )](https://www.ubuntuupdates.org/package/google_chrome/stable/main/base/google-chrome-beta)からダウンロードしたものを置いている．
-
 ## Status
-[x] MarkdownからCSSを維持したHTMLファイルの生成
-[x] HTMLファイルからPDFの生成
-[x] ヘッダーやフッターを持つPDFの生成
-[ ] 一連の実行を1手順での自動化
-[ ] 大量のドキュメントへの対応
+- [x] MarkdownからCSSを維持したHTMLファイルの生成
+- [x] HTMLファイルからPDFの生成
+- [x] ヘッダーやフッターを持つPDFの生成
+- [x] 一連の実行を1手順での自動化
+- [x] 大量のドキュメントへの対応
