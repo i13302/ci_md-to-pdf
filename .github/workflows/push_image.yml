@@ -20,7 +20,8 @@ jobs:
           TAG=$(TZ=UTC-9 date '+%Y%m')-${SHA:0:7}
           LATEST=latest
           echo "TAGS=$TAG,$LATEST" >> $GITHUB_ENV
-          echo TAG $TAGS
+          echo TAG $TAG
+          echo ${{ env.TAGS }}
 
       - name: Cache Docker layers
         uses: actions/cache@v2
