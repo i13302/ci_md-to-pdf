@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: convert_file
-          path: work/pdf/*.pdf
+          path: test/pdf/*.pdf
 
   convert_dir:
     needs: push_image
@@ -86,4 +86,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: convert_dir
-          path: work/pdf/*.pdf
+          path: test/pdf/*.pdf
