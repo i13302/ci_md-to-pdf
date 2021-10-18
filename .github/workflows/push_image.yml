@@ -17,11 +17,9 @@ jobs:
       - name: create tag
         run: |
           SHA=${{ github.sha }}
-          TAG=:$(TZ=UTC-9 date '+%Y%m')-${SHA:0:7}
-          LATEST=:latest
-          echo "TAGS=$TAG$LATEST" >> $GITHUB_ENV
+          TAG=$(TZ=UTC-9 date '+%Y%m')-${SHA:0:7}
+          echo "TAGS=$TAG" >> $GITHUB_ENV
           echo TAG $TAG
-          echo ${{ env.TAGS }}
 
       - name: Cache Docker layers
         uses: actions/cache@v2
@@ -49,7 +47,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}${{ env.TAGS }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
