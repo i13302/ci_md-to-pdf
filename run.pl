@@ -48,6 +48,13 @@ sub docker_cmd_mdtohtml
 	return join(' ',@cmd);
 }
 
+sub docker_cmd_htmltopdf
+{
+	my ($work_dir,$html_dir,$pdf_dir,$htmltopdf,$pwd,$html_name,$pdf_name,$tz)=@_;
+	my $cmd='docker run --rm -e TZ='.$tz.' --volume "'.$pwd.'/'.$work_dir.':/data" '.$htmltopdf.' "'.$html_dir."/".$html_name.' '.$pdf_dir.'/'.$pdf_name.'"';
+	
+	return $cmd;
+}
 
 sub main
 {
@@ -59,6 +66,7 @@ sub main
 	my $mdtohtml ='pandoc/latex';
 	my $htmltopdf='i13302/printout';
 	my $pwd      =&ret_chomp(`pwd`);
+	my $tz       ='Asia/Tokyo';
 
 	GetOptions(
 		'work=s'     =>\$work_dir,
@@ -68,26 +76,23 @@ sub main
 		'pdf=s'      =>\$pdf_dir,
 		'mdtohtml=s' =>\$mdtohtml ,
 		'htmltopdf=s'=>\$htmltopdf,
-		'pwd=s'      =>\$pwd
+		'pwd=s'      =>\$pwd,
+		'TZ=s'       =>\$tz
 	);
-
-
-	# print Dumper $htmltopdf,$pwd;
 
 	my @md_path=glob $work_dir.'/'.$md_dir.'/*';
 	my @css_path=glob $work_dir.'/'.$css_dir.'/*';
 	
 	trim_workdir_css_files($work_dir,\@css_path);
 
-	# print @md_files;
 	foreach(@md_path){
 		my $md_name=&basename($_);
 		my $html_name=&ret_ext_change($md_name,'html');
+		my $pdf_name=&ret_ext_change($md_name,'pdf');
 		
-		system(&docker_cmd_mdtohtml($work_dir,$md_dir,$html_dir,$mdtohtml,$pwd,$md_name,$html_name,\@css_path));;
-		print "\n";
+		my @cmd=(&docker_cmd_mdtohtml($work_dir,$md_dir,$html_dir,$mdtohtml,$pwd,$md_name,$html_name,\@css_path) , &docker_cmd_htmltopdf($work_dir,$html_dir,$pdf_dir,$htmltopdf,$pwd,$html_name,$pdf_name,$tz));
+		system(join('&&',@cmd));
 	}
-
 }
 
 &main;
