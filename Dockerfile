@@ -38,18 +38,16 @@ WORKDIR /root
 
 # add google-chrome apt list
 COPY --from=addsourcelist /tmp/google-chrome.list /etc/apt/sources.list.d/google-chrome.list
-
 RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 # install any package
 RUN apt-get -y update && \
-	apt-get -y install --no-install-recommends python3-dev fonts-ipafont google-chrome-beta && \
+	apt-get -y install --no-install-recommends fonts-ipafont google-chrome-beta && \
 	apt-get -y autoremove && apt-get -y clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=python-compile /root/requirements.txt /root/requirements.txt
 COPY --from=python-compile /root/.local /root/.local
 COPY --from=python-compile /root/.cache /root/.cache
-
 RUN pip3 install -r requirements.txt && \
     rm -rf requirements.txt /root/.local /root/.cache
 
