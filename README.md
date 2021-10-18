@@ -44,3 +44,10 @@ make run
 
 ### Product PDF
 markdown is builded to PDF file in `work/pdf` dir.
+
+### Test
+add make option `WORKDIR=test`
+
+```Sample:shell
+make WORKDIR=test run
+```
