@@ -14,6 +14,18 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: create tag
+        run: |
+          SHA=${{ github.sha }}
+          TAG=$(TZ=UTC-9 date '+%Y%m')-${SHA:0:7}
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            LATEST=latest
+            echo "TAGS=$TAG,$LATEST" >> $GITHUB_ENV
+          else
+            echo "TAGS=$TAG" >> $GITHUB_ENV
+          fi
+          echo TAG $TAG
+
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
@@ -40,7 +52,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
