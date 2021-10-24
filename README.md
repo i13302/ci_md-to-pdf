@@ -64,3 +64,6 @@ make test_run
 ```Sample:shell
 make test_clean
 ```
+
+## License
+[MIT License](./LICENSE).
