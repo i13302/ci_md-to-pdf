@@ -45,9 +45,22 @@ make run
 ### Product PDF
 markdown is builded to PDF file in `work/pdf` dir.
 
-### Test
-add make option `WORKDIR=test`
+### Clean up builded files
+remove `work/html` and `work/pdf`.
 
+```:shell
+make clean
+```
+
+### Test
+This is builded in `test` dir.
+
+#### Build Text
 ```Sample:shell
-make WORKDIR=test run
+make test_run
+```
+
+### Clean up
+```Sample:shell
+make test_clean
 ```
