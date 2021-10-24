@@ -1,4 +1,4 @@
-# ci_md-to-pdf
+# printout
 markdownからPDFを出力する取り組み．  
 CSSなどのスタイルやレイアウトは，授業資料とか技術系のドキュメントなど，自由に組み込める．  
 大量のドキュメントを前提とし，GitHub Actionsで，1ドキュメント1PDFに変換する．  
