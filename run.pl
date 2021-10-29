@@ -85,6 +85,8 @@ sub main
 	
 	trim_workdir_css_files($work_dir,\@css_path);
 
+	system('cp '.$work_dir.'/base/* '.$work_dir.'/pdf/');
+
 	foreach(@md_path){
 		my $md_name=&basename($_);
 		my $html_name=&ret_ext_change($md_name,'html');
