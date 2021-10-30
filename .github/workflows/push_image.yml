@@ -64,7 +64,7 @@ jobs:
       - name: Convert file markdown to pdf
         run: |
           make setup
-          make CTN2=ghcr.io/i13302/printout test_file
+          make CTN1=ghcr.io/i13302/pandoc CTN2=ghcr.io/i13302/printout test_file
 
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
@@ -82,7 +82,7 @@ jobs:
       - name: Convert file markdown to pdf
         run: |
           make setup
-          make CTN2=ghcr.io/i13302/printout test_run
+          make CTN1=ghcr.io/i13302/pandoc CTN2=ghcr.io/i13302/printout test_run
 
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
