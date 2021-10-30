@@ -23,16 +23,6 @@ jobs:
           echo "TAGS=$TAG" >> $GITHUB_ENV
           echo TAG $TAG
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ github.ref }}-${{ github.sha }}
-          restore-keys: |
-            ${{ github.ref }}-${{ github.sha }}
-            ${{ github.ref }}
-            refs/head/master
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -51,8 +41,6 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:${{ env.TAGS }}
             ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
 
   convert_file:
     needs: push_image
