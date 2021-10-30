@@ -1,3 +1,3 @@
-#!/bin/ash
+#!/bin/sh
 echo $@
-$@
+/bin/sh -c "$@"
