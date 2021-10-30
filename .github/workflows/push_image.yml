@@ -17,6 +17,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        
+      - name: delete cache
+        run: |
+          rm -rf /tmp/.buildx-cache*
 
       - name: create tag
         run: |
