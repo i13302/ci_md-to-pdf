@@ -93,6 +93,7 @@ sub main
 		my $pdf_name=&ret_ext_change($md_name,'pdf');
 		
 		my @cmd=(&docker_cmd_mdtohtml($work_dir,$md_dir,$html_dir,$mdtohtml,$pwd,$md_name,$html_name,\@css_path) , &docker_cmd_htmltopdf($work_dir,$html_dir,$pdf_dir,$htmltopdf,$pwd,$html_name,$pdf_name,$tz));
+		print Dumper @cmd;
 		system(join('&&',@cmd));
 	}
 }
