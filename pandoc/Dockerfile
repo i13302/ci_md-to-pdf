@@ -1,6 +1,6 @@
 FROM pandoc/latex
 
-COPY pandoc/docker-entrypoint.sh /root/docker-entrypoint.sh
+COPY docker-entrypoint.sh /root/docker-entrypoint.sh
 
 RUN chmod +x /root/docker-entrypoint.sh
 

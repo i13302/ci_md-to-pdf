@@ -24,7 +24,7 @@ RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >
 FROM debian:buster AS python-compile
 WORKDIR /root
 
-COPY printout/requirements.txt .
+COPY requirements.txt .
 
 RUN apt-get -y update && apt-get -y install python3 python3-pip
 RUN pip3 install --user -r requirements.txt
@@ -54,9 +54,9 @@ COPY --from=python-compile /root/.cache /root/.cache
 RUN pip3 install -r requirements.txt && \
     rm -rf requirements.txt /root/.local /root/.cache
 
-COPY printout/docker-entrypoint.sh .
+COPY docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh
 
-COPY printout/main.py .
+COPY main.py .
 ENTRYPOINT ["/root/docker-entrypoint.sh"]
 #===================================================================================================
