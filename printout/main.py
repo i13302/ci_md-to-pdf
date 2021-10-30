@@ -28,6 +28,7 @@ def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
 	driver.get(path)
 
 	calculated_print_options = {
+            'marginTop': 0.6,
             'landscape': False,
             'displayHeaderFooter': True,
             'printBackground': True,
