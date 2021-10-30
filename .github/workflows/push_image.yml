@@ -7,9 +7,11 @@ on:
 
 jobs:
   push_image:
-    env:
-      IMAGE_NAME: printout
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        target: ["pandoc", "printout"]
+
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -47,8 +49,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:${{ env.TAGS }}
+            ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
