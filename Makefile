@@ -15,8 +15,8 @@ setup:
 	mkdir -p ${WORKDIR}/${CSSDIR} ${WORKDIR}/${HTMLDIR} ${WORKDIR}/${MDDIR} ${WORKDIR}/${PDFDIR}
 
 build:
-	docker build . -t $(CTN1) -f pandoc/Dockerfile
-	docker build . -t $(CTN2) -f printout/Dockerfile
+	cd pandoc   ; docker build . -t $(CTN1)
+	cd printout ; docker build . -t $(CTN2)
 
 run:
 	perl run.pl --htmltopdf=$(CTN2) --work=${WORKDIR} --markdown=${MDDIR} --html=${HTMLDIR} --css=${CSSDIR} --pdf=${PDFDIR} --mdtohtml=${CTN1} --htmltopdf=${CTN2} --TZ=${TZ}
