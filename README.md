@@ -31,8 +31,8 @@ cd printout
 
 ### Get Image
 #### Docker Pull
-
-[Package printout](https://github.com/i13302/ci_md-to-pdf/pkgs/container/printout)
+[Package pandoc](https://github.com/i13302/printout/pkgs/container/pandoc)
+[Package printout](https://github.com/i13302/printout/pkgs/container/printout)
 
 ```:shell
 docker pull ghcr.io/i13302/pandoc
