@@ -24,7 +24,7 @@ run:
 test_dir:
 	docker run --rm --volume "$(shell pwd)/${TESTDIR}:/data" $(CTN1) pandoc ${MDDIR} ${HTMLDIR} ${CSSDIR}
 
-	docker run --rm $(TZ) --volume "$(shell pwd)/${TESTDIR}:/data" $(CTN2) "${HTMLDIR}/01_Doc_en.html ${PDFDIR}/01_Doc_en.pdf"
+	docker run --rm $(TZ) --volume "$(shell pwd)/${TESTDIR}:/data" $(CTN2) ${HTMLDIR} ${PDFDIR}
 	
 
 test_run:
