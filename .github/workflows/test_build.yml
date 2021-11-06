@@ -64,6 +64,9 @@ jobs:
     needs: build_image
     runs-on: ubuntu-20.04
     steps:
+      - name: Set DATE
+        run: echo "DATE=$(date '+%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+    
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -98,5 +101,5 @@ jobs:
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
         with:
-          name: convert_test
+          name: PDFTEST-${{ env.DATE }}
           path: test/pdf/*.pdf
