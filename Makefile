@@ -24,7 +24,7 @@ base:
 run:
 	docker run --rm --volume "$(shell pwd)/${WORKDIR}:/data" $(CTN1) pandoc ${MDDIR} ${HTMLDIR} ${CSSDIR}
 
-	docker run --rm $(TZ) --volume "$(shell pwd)/${WORKDIR}:/data" $(CTN2) ${HTMLDIR} ${PDFDIR}
+	bash printout.sh ${WORKDIR} ${HTMLDIR} ${PDFDIR} ${CTN2} "${TZ}"
 
 check:
 	perl check.pl --work=${WORKDIR} --markdown=${MDDIR} --pdf=${PDFDIR}
@@ -37,8 +37,7 @@ test_base:
 	
 test_run:
 	docker run --rm --volume "$(shell pwd)/${TESTDIR}:/data" $(CTN1) pandoc ${MDDIR} ${HTMLDIR} ${CSSDIR}
-
-	docker run --rm $(TZ) --volume "$(shell pwd)/${TESTDIR}:/data" $(CTN2) ${HTMLDIR} ${PDFDIR}
+	bash printout.sh ${TESTDIR} ${HTMLDIR} ${PDFDIR} ${CTN2} "${TZ}"
 
 test_check:
 	perl check.pl --work=${TESTDIR} --markdown=${MDDIR} --pdf=${PDFDIR}

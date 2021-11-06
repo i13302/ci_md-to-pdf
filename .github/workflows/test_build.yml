@@ -1,12 +1,12 @@
-name: push_image
+name: Test Build
 
 on:
   push:
     branches:
-      - '*/*'
+      - "*/*"
 
 jobs:
-  push_image:
+  build_image:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -51,26 +51,56 @@ jobs:
           tags: |
             ${{ github.repository_owner }}/${{ matrix.target }}:${{ env.TAGS }}
             ${{ github.repository_owner }}/${{ matrix.target }}:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/${{ matrix.target }}/.buildx-cache
+          cache-to: type=local,dest=/tmp/${{ matrix.target }}/.buildx-cache
+          outputs: type=docker,dest=/tmp/image-${{ matrix.target }}.tar
+
+      - name: Upload ${{ matrix.target }} artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: image-${{ matrix.target }}.tar
+          path: /tmp/image-${{ matrix.target }}.tar
 
   test:
-    needs: push_image
+    needs: build_image
     runs-on: ubuntu-20.04
     steps:
+      - name: Set DATE
+        run: echo "DATE=$(date '+%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: chackout
         uses: actions/checkout@v2
+
+      - name: Download pandoc artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image-pandoc.tar
+          path: /tmp/
+
+      - name: Download printout artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image-printout.tar
+          path: /tmp/
+
+      - name: Load Docker image
+        run: |
+          docker load --input /tmp/image-pandoc.tar
+          docker load --input /tmp/image-printout.tar
+          docker images
 
       - name: Convert file markdown to pdf
         run: |
           make setup
           make test_base
-          make CTN1=ghcr.io/i13302/pandoc:latest CTN2=ghcr.io/i13302/printout:latest test_run
+          make CTN1=i13302/pandoc CTN2=i13302/printout test_run
           make test_check
 
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
         with:
-          name: convert_test
+          name: PDFTEST-${{ env.DATE }}
           path: test/pdf/*.pdf
-
