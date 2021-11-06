@@ -53,6 +53,7 @@ jobs:
             ${{ github.repository_owner }}/${{ matrix.target }}:latest
           cache-from: type=local,src=/tmp/${{ matrix.target }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{ matrix.target }}/.buildx-cache
+          outputs: type=docker,dest=/tmp/${{ matrix.target }}.tar
 
   test:
     needs: build_image
@@ -60,9 +61,12 @@ jobs:
     steps:
       - name: chackout
         uses: actions/checkout@v2
-      - name: checkimage
-        run: docker images
-
+      - name: Load Docker image
+        run: |
+          docker load --input /tmp/pandoc.tar
+          docker load --input /tmp/printout.tar
+          docker images
+      
       - name: Convert file markdown to pdf
         run: |
           make setup
