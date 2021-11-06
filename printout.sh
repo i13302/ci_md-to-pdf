@@ -18,7 +18,7 @@ do
 	pids+=( "$!" )
 done
 
-for pid in "${pid[@]}"
+for pid in "${pids[@]}"
 do
 	wait $pid
 done
