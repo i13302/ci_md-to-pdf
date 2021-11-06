@@ -74,13 +74,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: image-pandoc.tar
-          path: /tmp/image-pandoc.tar
+          path: /tmp/
 
       - name: Download printout artifact
         uses: actions/download-artifact@v2
         with:
           name: image-printout.tar
-          path: /tmp/image-printout.tar
+          path: /tmp/
 
       - name: Load Docker image
         run: |
