@@ -59,6 +59,9 @@ jobs:
     needs: build_image
     runs-on: ubuntu-20.04
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+    
       - name: chackout
         uses: actions/checkout@v2
 
