@@ -65,7 +65,7 @@ jobs:
         run: |
           make setup
           make test_base
-          make CTN1=i13302/pandoc:latest CTN2=i13302/printout:latest test_run
+          make CTN1=i13302/pandoc CTN2=i13302/printout test_run
           make test_check
 
       - name: Upload file pdf.
