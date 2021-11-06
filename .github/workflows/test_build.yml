@@ -74,18 +74,18 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: image-pandoc.tar
-          path: /tmp
+          path: /tmp/image-pandoc.tar
 
       - name: Download printout artifact
         uses: actions/download-artifact@v2
         with:
           name: image-printout.tar
-          path: /tmp
+          path: /tmp/image-printout.tar
 
       - name: Load Docker image
         run: |
-          docker load --input /tmp/pandoc.tar
-          docker load --input /tmp/printout.tar
+          docker load --input /tmp/image-pandoc.tar
+          docker load --input /tmp/image-printout.tar
           docker images
 
       - name: Convert file markdown to pdf
