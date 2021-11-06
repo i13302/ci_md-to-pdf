@@ -58,5 +58,7 @@ COPY docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh
 
 COPY main.py .
+
+WORKDIR /data
 ENTRYPOINT ["/root/docker-entrypoint.sh"]
 #===================================================================================================
