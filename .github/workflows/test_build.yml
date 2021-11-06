@@ -55,15 +55,32 @@ jobs:
           cache-to: type=local,dest=/tmp/${{ matrix.target }}/.buildx-cache
           outputs: type=docker,dest=/tmp/${{ matrix.target }}.tar
 
+      - name: Upload ${{ matrix.target }} artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: image-${{ matrix.target }}.tar
+          path: /tmp/${{ matrix.target }}.tar
   test:
     needs: build_image
     runs-on: ubuntu-20.04
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-    
+
       - name: chackout
         uses: actions/checkout@v2
+
+      - name: Download pandoc artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image-pandoc.tar
+          path: /tmp
+
+      - name: Download printout artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image-printout.tar
+          path: /tmp
 
       - name: Load Docker image
         run: |
