@@ -3,7 +3,7 @@ name: Test Build
 on:
   push:
     branches:
-      - '*/*'
+      - "*/*"
 
 jobs:
   build_image:
@@ -61,12 +61,13 @@ jobs:
     steps:
       - name: chackout
         uses: actions/checkout@v2
+
       - name: Load Docker image
         run: |
           docker load --input /tmp/pandoc.tar
           docker load --input /tmp/printout.tar
           docker images
-      
+
       - name: Convert file markdown to pdf
         run: |
           make setup
@@ -79,4 +80,3 @@ jobs:
         with:
           name: convert_test
           path: test/pdf/*.pdf
-
