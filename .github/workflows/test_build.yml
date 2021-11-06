@@ -60,13 +60,14 @@ jobs:
         with:
           name: image-${{ matrix.target }}.tar
           path: /tmp/${{ matrix.target }}.tar
+
   test:
     needs: build_image
     runs-on: ubuntu-20.04
     steps:
       - name: Set DATE
         run: echo "DATE=$(date '+%Y%m%d-%H%M%S')" >> $GITHUB_ENV
-    
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 

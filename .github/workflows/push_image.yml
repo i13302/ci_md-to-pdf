@@ -1,9 +1,9 @@
-name: push_image
+name: Push Image
 
 on:
   push:
     branches:
-      - 'master'
+      - "master"
 
 jobs:
   push_image:
@@ -51,13 +51,16 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:${{ env.TAGS }}
             ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/${{ matrix.target }}/.buildx-cache
+          cache-to: type=local,dest=/tmp/${{ matrix.target }}/.buildx-cache
 
   test:
     needs: push_image
     runs-on: ubuntu-20.04
     steps:
+      - name: Set DATE
+        run: echo "DATE=$(date '+%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+
       - name: chackout
         uses: actions/checkout@v2
 
@@ -71,6 +74,5 @@ jobs:
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
         with:
-          name: convert_test
+          name: PDFTEST-${{ env.DATE }}
           path: test/pdf/*.pdf
-
