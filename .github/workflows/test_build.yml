@@ -1,4 +1,4 @@
-name: push_image
+name: Test Build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '*/*'
 
 jobs:
-  push_image:
+  build_image:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -55,11 +55,13 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
   test:
-    needs: push_image
+    needs: build_image
     runs-on: ubuntu-20.04
     steps:
       - name: chackout
         uses: actions/checkout@v2
+      - name: checkimage
+        run: docker images
 
       - name: Convert file markdown to pdf
         run: |
