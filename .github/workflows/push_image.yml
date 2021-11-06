@@ -54,7 +54,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-  convert_file:
+  test:
     needs: push_image
     runs-on: ubuntu-20.04
     steps:
@@ -64,28 +64,13 @@ jobs:
       - name: Convert file markdown to pdf
         run: |
           make setup
-          make CTN1=ghcr.io/i13302/pandoc CTN2=ghcr.io/i13302/printout test_dir
+          make test_base
+          make CTN1=ghcr.io/i13302/pandoc:latest CTN2=ghcr.io/i13302/printout:latest test_run
+          make test_check
 
       - name: Upload file pdf.
         uses: actions/upload-artifact@master
         with:
-          name: convert_file
+          name: convert_test
           path: test/pdf/*.pdf
 
-  convert_dir:
-    needs: push_image
-    runs-on: ubuntu-20.04
-    steps:
-      - name: chackout
-        uses: actions/checkout@v2
-
-      - name: Convert file markdown to pdf
-        run: |
-          make setup
-          make CTN1=ghcr.io/i13302/pandoc CTN2=ghcr.io/i13302/printout test_run
-
-      - name: Upload file pdf.
-        uses: actions/upload-artifact@master
-        with:
-          name: convert_dir
-          path: test/pdf/*.pdf
