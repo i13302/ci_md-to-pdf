@@ -5,7 +5,7 @@ RUN apk add -U unzip curl
 #===================================================================================================
 
 #===================================================================================================
-# from Chromeの最新メジャーバージョンを元にChromeDriverの最新バージョンを取得するよう修正する by masaru-b-cl · Pull Request #16 · prismatix-jp/openjdk-with-git https://github.com/prismatix-jp/openjdk-with-git/pull/16/files
+# https://blog.shikoan.com/chrome-drive-binary/
 FROM extracter as unzipperchromedriver
 RUN curl -O https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip && \
     unzip -q chromedriver_linux64.zip
@@ -14,6 +14,11 @@ RUN curl -O https://chromedriver.storage.googleapis.com/$(curl -s https://chrome
 #===================================================================================================
 FROM extracter as addsourcelist
 RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> google-chrome.list
+#===================================================================================================
+
+#===================================================================================================
+FROM extracter as downloadchrome
+RUN curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb 
 #===================================================================================================
 
 #===================================================================================================
@@ -36,14 +41,13 @@ WORKDIR /root
 # install ChromeDriver
 COPY --from=unzipperchromedriver /tmp/chromedriver /usr/local/bin/chromedriver
 
-# add google-chrome apt list
-COPY --from=addsourcelist /tmp/google-chrome.list /etc/apt/sources.list.d/google-chrome.list
-RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+# add google-chrome
+COPY --from=downloadchrome /tmp/google-chrome-stable_current_amd64.deb /tmp/google-chrome-stable_current_amd64.deb 
 
 # install any package
 RUN apt-get -y update && \
-	apt-get -y install --no-install-recommends fonts-ipafont google-chrome-beta && \
-	apt-get -y autoremove && apt-get -y clean && rm -rf /var/lib/apt/lists/*
+	apt-get -y install --no-install-recommends fonts-ipafont /tmp/google-chrome-stable_current_amd64.deb && \
+	apt-get -y autoremove && apt-get -y clean && rm -rf /var/lib/apt/lists/* && rm /tmp/google-chrome-stable_current_amd64.deb 
 
 COPY --from=python-compile /root/requirements.txt /root/requirements.txt
 COPY --from=python-compile /root/.local /root/.local
