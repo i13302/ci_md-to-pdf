@@ -7,11 +7,8 @@ RUN apk add -U unzip curl
 #===================================================================================================
 # from Chromeの最新メジャーバージョンを元にChromeDriverの最新バージョンを取得するよう修正する by masaru-b-cl · Pull Request #16 · prismatix-jp/openjdk-with-git https://github.com/prismatix-jp/openjdk-with-git/pull/16/files
 FROM extracter as unzipperchromedriver
-RUN CHROME_LATEST_VERSION=$(curl -sS omahaproxy.appspot.com/linux?channel=beta) && \
-	CHROME_LATEST_MAJOR_VERSION=$(echo $CHROME_LATEST_VERSION | cut -d . -f 1) && \
-	CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_LATEST_MAJOR_VERSION) && \
-	curl -sS http://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip -o chromedriver_linux64.zip && \
-	unzip -q chromedriver_linux64.zip
+RUN curl -O https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip && \
+    unzip -q chromedriver_linux64.zip
 #===================================================================================================
 
 #===================================================================================================
