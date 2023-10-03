@@ -8,6 +8,8 @@ on:
 jobs:
   push_image:
     runs-on: ubuntu-20.04
+    permissions:
+      packages: write
     strategy:
       matrix:
         target: ["pandoc", "printout"]
