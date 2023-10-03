@@ -20,7 +20,7 @@ def send_devtools(driver, cmd, params={}):
 def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
 	service=Service(executable_path=chromedriver)
 	webdriver_options = Options()
-	webdriver_options.binary_location = '/usr/bin/google-chrome-beta'
+	webdriver_options.binary_location = '/usr/bin/google-chrome'
 	webdriver_options.add_argument('--headless')
 	webdriver_options.add_argument('--disable-gpu')
 	webdriver_options.add_argument('--no-sandbox')
