@@ -2,6 +2,7 @@
 import sys
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import json
 import base64
 
@@ -17,13 +18,14 @@ def send_devtools(driver, cmd, params={}):
 
 
 def get_pdf_from_html(path, chromedriver='./chromedriver', print_options={}):
+	service=Service(executable_path=chromedriver)
 	webdriver_options = Options()
 	webdriver_options.binary_location = '/usr/bin/google-chrome-beta'
 	webdriver_options.add_argument('--headless')
 	webdriver_options.add_argument('--disable-gpu')
 	webdriver_options.add_argument('--no-sandbox')
 	webdriver_options.add_argument("--lang=ja")
-	driver = webdriver.Chrome(chromedriver, options=webdriver_options)
+	driver = webdriver.Chrome(service=service, options=webdriver_options)
 
 	driver.get(path)
 
