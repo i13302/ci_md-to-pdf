@@ -9,7 +9,7 @@ RUN apk add -U unzip curl
 # https://zenn.dev/route06/articles/78c30c6627a932
 FROM extracter as unzipperchromedriver
 RUN CHROMEDRIVER_VERSION=$(curl -sS https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE) && \
-	curl -sS https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip && \
+	curl -sS -o chromedriver_linux64.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip && \
 	unzip -q chromedriver_linux64.zip
 #===================================================================================================
 
