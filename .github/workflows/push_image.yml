@@ -49,7 +49,7 @@ jobs:
           context: ./${{ matrix.target }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:${{ env.TAGS }}
+            ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:${{ steps.meta.outputs.tags }}
             ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}:latest
           cache-from: type=local,src=/tmp/${{ matrix.target }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{ matrix.target }}/.buildx-cache
