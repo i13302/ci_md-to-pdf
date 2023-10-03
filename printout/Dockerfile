@@ -6,9 +6,11 @@ RUN apk add -U unzip curl
 
 #===================================================================================================
 # https://blog.shikoan.com/chrome-drive-binary/
+# https://zenn.dev/route06/articles/78c30c6627a932
 FROM extracter as unzipperchromedriver
-RUN curl -O https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip && \
-    unzip -q chromedriver_linux64.zip
+RUN CHROMEDRIVER_VERSION=$(curl -sS https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE) && \
+	curl -sS https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip && \
+	unzip -q chromedriver_linux64.zip
 #===================================================================================================
 
 #===================================================================================================
@@ -39,7 +41,7 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /root
 
 # install ChromeDriver
-COPY --from=unzipperchromedriver /tmp/chromedriver /usr/local/bin/chromedriver
+COPY --from=unzipperchromedriver /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
 
 # add google-chrome
 COPY --from=downloadchrome /tmp/google-chrome-stable_current_amd64.deb /tmp/google-chrome-stable_current_amd64.deb 
